@@ -1,0 +1,129 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <!-- Avatar 1 -->
+    <ImageView
+        android:id="@+id/avatar1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar1"
+        app:layout_constraintEnd_toStartOf="@id/avatar2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/tick1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/avatar1"
+        app:layout_constraintBottom_toBottomOf="@id/avatar1" />
+
+    <!-- Avatar 2 -->
+    <ImageView
+        android:id="@+id/avatar2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar2"
+        app:layout_constraintStart_toEndOf="@id/avatar1"
+        app:layout_constraintEnd_toStartOf="@id/avatar3"
+        app:layout_constraintTop_toTopOf="@id/avatar1"/>
+
+    <ImageView
+        android:id="@+id/tick2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/avatar2"
+        app:layout_constraintBottom_toBottomOf="@id/avatar2" />
+
+    <!-- Avatar 3 -->
+    <ImageView
+        android:id="@+id/avatar3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar3"
+        app:layout_constraintStart_toEndOf="@id/avatar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatar2"/>
+
+    <ImageView
+        android:id="@+id/tick3"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/avatar3"
+        app:layout_constraintBottom_toBottomOf="@id/avatar3" />
+
+    <!-- Avatar 4 -->
+    <ImageView
+        android:id="@+id/avatar4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar4"
+        app:layout_constraintEnd_toStartOf="@id/avatar5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avatar1" />
+
+    <ImageView
+        android:id="@+id/tick4"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/avatar4"
+        app:layout_constraintBottom_toBottomOf="@id/avatar4" />
+
+    <!-- Avatar 5 -->
+    <ImageView
+        android:id="@+id/avatar5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar5"
+        app:layout_constraintEnd_toStartOf="@id/avatar6"
+        app:layout_constraintStart_toEndOf="@id/avatar4"
+        app:layout_constraintTop_toTopOf="@id/avatar4" />
+
+    <ImageView
+        android:id="@+id/tick5"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/avatar5"
+        app:layout_constraintBottom_toBottomOf="@id/avatar5" />
+
+    <!-- Avatar 6 -->
+    <ImageView
+        android:id="@+id/avatar6"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar5"
+        app:layout_constraintTop_toTopOf="@id/avatar5" />
+
+    <ImageView
+        android:id="@+id/tick6"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/checked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/avatar6"
+        app:layout_constraintBottom_toBottomOf="@id/avatar6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

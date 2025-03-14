@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_chat"
+    app:startDestination="@id/fragmentChat">
+
+    <fragment
+        android:id="@+id/fragmentChat"
+        android:name="com.example.mysterymessage.ui.chat.FragmentChat"
+        android:label="Recent Chats">
+        <action
+            android:id="@+id/action_fragmentChat_to_fragmentSettings2"
+            app:destination="@id/fragmentSettings" />
+        <action
+            android:id="@+id/action_fragmentChat_to_fragmentAddFriend2"
+            app:destination="@id/fragmentAddFriend2" />
+    </fragment>
+    <action android:id="@+id/action_global_fragmentChat" app:destination="@id/fragmentChat" />
+    <fragment
+        android:id="@+id/fragmentAddFriend2"
+        android:name="com.example.mysterymessage.ui.AddFriend.FragmentAddFriend"
+        android:label="Add Friend" />
+    <fragment
+        android:id="@+id/fragmentSettings"
+        android:name="com.example.mysterymessage.ui.settings.FragmentSettings"
+        android:label="@string/title_setting" />
+
+</navigation>
