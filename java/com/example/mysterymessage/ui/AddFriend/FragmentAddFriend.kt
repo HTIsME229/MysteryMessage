@@ -47,7 +47,7 @@ class FragmentAddFriend:Fragment() ,MenuProvider {
     }
 
     private fun setUpView() {
-            adapter = AddFriendAdapter(object :AddFriendAdapter.OnItemAddFriendClickListener{
+            adapter = AddFriendAdapter(loginViewModel._profile.value?:null,object :AddFriendAdapter.OnItemAddFriendClickListener{
                 override fun onItemClick(frienduser: User) {
                     if(loginViewModel._profile.value != null)
                     {

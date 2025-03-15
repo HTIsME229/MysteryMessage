@@ -48,5 +48,9 @@
     <string name="logout">Logout</string>
     <string name="about">About</string>
     <string name="general">General</string>
+    <string name="request_friend">Friend Request</string>
+    <string name="friends">Friends</string>
+    <string name="text_btn_cancel">Cancel</string>
+    <string name="text_btn_accept">Accept</string>
 
 </resources>

@@ -12,6 +12,7 @@ import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.ItemContactBinding
 
 class AddFriendAdapter(
+    private val profileUser: User?,
     private  val onItemAddFriendClickListener: OnItemAddFriendClickListener,
 private val context: Context
 ) :RecyclerView.Adapter<AddFriendAdapter.ViewHolder>() {
@@ -32,6 +33,11 @@ private val context: Context
                     .circleCrop() // Cắt ảnh thành hình tròn (tuỳ chọn)
                     .into(binding.ivProfile);
                 binding.tvName.text= user.userName
+                (profileUser?.friendRequests.orEmpty().union(profileUser?.friends.orEmpty())).forEach { friend ->
+                        if(user.userName == friend){
+                            binding.btnAddFriend.visibility=View.GONE
+                        }
+                }
                 binding.btnAddFriend.setOnClickListener{
                     onItemAddFriendClickListener.onItemClick(user)
                 }

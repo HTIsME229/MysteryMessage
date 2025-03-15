@@ -66,7 +66,7 @@ class FragmentChat : Fragment(), MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
-        checkLogin()
+//        checkLogin()
         mBinding.floatingActionButton.setOnClickListener {
             val action = FragmentChatDirections.actionFragmentChatToFragmentAddFriend2()
             navController.navigate(action)

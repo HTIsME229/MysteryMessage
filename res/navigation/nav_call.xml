@@ -2,10 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_call"
-    app:startDestination="@id/fragmentVoiceCall">
-
+    app:startDestination="@id/fragmentFriend">
     <fragment
-        android:id="@+id/fragmentVoiceCall"
-        android:name="com.example.mysterymessage.voicecall.FragmentVoiceCall"
-        android:label="FragmentVoiceCall" />
+        android:id="@+id/fragmentFriend"
+        android:name="com.example.mysterymessage.ui.AddFriend.FragmentFriend"
+        android:label="Friend" />
 </navigation>
