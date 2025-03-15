@@ -36,4 +36,8 @@ class DefaultRepository
     override suspend fun  findUserWithUID(uid: String): Flow<User?>{
         return remoteDataSource.findUserWithUID(uid)
     }
+
+    override  fun findListFriendRequestWithUID(uid: String): Flow<List<User>?> {
+       return remoteDataSource.findListFriendRequestWithUID(uid)
+    }
 }

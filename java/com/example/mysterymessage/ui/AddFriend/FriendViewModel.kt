@@ -16,6 +16,8 @@ class FriendViewModel @Inject constructor(
 ) :ViewModel(){
     private var listFriend:MutableLiveData<List<User>?> = MutableLiveData()
     val _listFriend :LiveData<List<User>?>  = listFriend
+    private var listFriendRequest:MutableLiveData<List<User>?> = MutableLiveData()
+    val _listFriendRequest :LiveData<List<User>?>  = listFriendRequest
 
     fun searchUser(username: String) {
         viewModelScope.launch {
@@ -30,4 +32,13 @@ class FriendViewModel @Inject constructor(
                 repository.sendFriendRequest(userName,friendUserName)
             }
     }
+    fun listFriendRequestByUid(uid: String) {
+        viewModelScope.launch {
+            repository.findListFriendRequestWithUID(uid)
+                .collect { result ->
+                    listFriendRequest.postValue(result)
+                }
+        }
+    }
+
 }

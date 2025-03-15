@@ -16,6 +16,8 @@ interface DataSource {
 
         suspend fun sendFriendRequest (userName:String,friendUserName:String):ResponseResult
          fun  findUserWithUID( uid: String): Flow<User?>
+         fun findListFriendRequestWithUID( uid: String):Flow<List<User>?>
+
     }
     interface  LocalDataSource{
 

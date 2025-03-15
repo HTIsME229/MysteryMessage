@@ -46,11 +46,12 @@
 
     <!-- Danh sách chat -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewChats"
+        android:id="@+id/recycler_friend_request"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:paddingBottom="80dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

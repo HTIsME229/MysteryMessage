@@ -10,14 +10,47 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import com.example.mysterymessage.R
+import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentFriendBinding
+import com.example.mysterymessage.ui.adapter.FriendAdpater.FriendAdapter
+import com.example.mysterymessage.ui.adapter.FriendRequestAdapter.FriendRequestAdapter
+import com.example.mysterymessage.ui.login.LoginViewModel
 
 class FragmentFriend :Fragment(),MenuProvider{
     private lateinit var binding:FragmentFriendBinding
+    private val loginViewModel: LoginViewModel by activityViewModels()
+    private val friendViewModel: FriendViewModel by activityViewModels()
+
+    private lateinit var adapter:FriendRequestAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter= FriendRequestAdapter(object : FriendRequestAdapter.OnItemRequsestFriendClickListener {
+            override fun onAcceptRequest(user: User) {
+
+            }
+
+            override fun onCancelRequest(user: User) {
+            }
+
+        },requireContext())
+        loginViewModel._profile.observe(viewLifecycleOwner){
+            if(it != null){
+                friendViewModel.listFriendRequestByUid(it.uid)
+            }
+        }
+        friendViewModel._listFriendRequest.observe(viewLifecycleOwner){
+            if(it != null){
+                setUpView(it)
+            }
+        }
+    }
+
+    private fun setUpView(list: List<User>) {
+        adapter.updateListFriendRequest(list)
+        binding.recyclerFriendRequest.adapter=adapter
     }
 
     override fun onCreateView(

@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FragmentAddFriend:Fragment() ,MenuProvider {
     private lateinit var binding :FragmentAddFriendBinding
-    private val viewModel: FriendViewModel by viewModels()
+    private val viewModel: FriendViewModel by activityViewModels()
     private lateinit var adapter: AddFriendAdapter
     private val loginViewModel: LoginViewModel by activityViewModels()
 

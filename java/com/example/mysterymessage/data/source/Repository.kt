@@ -15,6 +15,8 @@ interface Repository {
         suspend fun findUserByUserName(username:String):Flow<List<User>?>
        suspend fun sendFriendRequest (userName:String,friendUserName:String):ResponseResult
         suspend fun  findUserWithUID(uid: String): Flow<User?>
+         fun findListFriendRequestWithUID( uid: String):Flow<List<User>?>
+
     }
     interface LocalRepository:Repository{}
 }

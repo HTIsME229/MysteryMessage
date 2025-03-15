@@ -118,7 +118,24 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
         }
     }.flowOn(Dispatchers.IO)
 
-
+    override fun findListFriendRequestWithUID(uid: String): Flow<List<User>?> = flow {
+        val baseUrl = "https://findlistfriendrequestbyuid-n6eo3bsn3a-uc.a.run.app"
+        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
+        val body = mapOf<String,String>(
+            "uid" to uid
+        )
+        try {
+            val response = retrofit.findListFriendRequestWithUID(body) // Gọi API
+            if (response.isSuccessful) {
+                emit(response.body()) // Trả về dữ liệu nếu thành công
+            } else {
+                emit(null) // Trả về `null` nếu API lỗi
+            }
+        } catch (e: Exception) {
+            emit(null)
+            e.message?.let { Log.d("call api ", it) }// Bắt lỗi nếu có exception
+        }
+    }.flowOn(Dispatchers.IO)
     private fun createRetrofitService(baseUrl: String): Retrofit {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY  // Log toàn bộ request/response
