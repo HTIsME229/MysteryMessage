@@ -11,7 +11,8 @@ import com.google.gson.annotations.SerializedName
 data class User(
 
     @PrimaryKey
-
+@SerializedName("uid")
+    val uid : String = "",
     @SerializedName("userName")
 
     val userName: String = "",
@@ -25,6 +26,9 @@ data class User(
     val avatar: String = "",
     @SerializedName("friends")
     val friends :MutableList<String> = mutableListOf(),
+    @SerializedName("friendRequests")
+    val friendRequests :MutableList<String> = mutableListOf(),
+
     @SerializedName("token")
     val token:String = ""
 ){

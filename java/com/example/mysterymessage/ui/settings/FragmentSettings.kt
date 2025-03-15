@@ -34,8 +34,6 @@ class FragmentSettings:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.logout.setOnClickListener{
-            val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            sharedPref.edit().putBoolean("LOGIN_SUCCESS", false).apply()
             viewModel.logOut()
         }
         viewModel._profile.observe(viewLifecycleOwner)

@@ -83,13 +83,16 @@ class RegisterFragment :Fragment() {
             }
         }
         viewModel._registerState.observe(viewLifecycleOwner){
-            if(it == "Success"){
+            if(it.success){
                 mBinding.progressBarRegister.visibility= ProgressBar.GONE
               findNavController().popBackStack()
             }
             else{
                 mBinding.progressBarRegister.visibility= ProgressBar.GONE
-                    Snackbar.make(mBinding.root,it,Snackbar.LENGTH_LONG).show()
+                it.error?.let { it1 ->
+                    Snackbar.make(mBinding.root,
+                        it1,Snackbar.LENGTH_LONG).show()
+                }
             }
         }
         mBinding.buttonRegister.setOnClickListener{regisrer()}
@@ -103,13 +106,13 @@ class RegisterFragment :Fragment() {
         val email = mBinding.editRegisterEmail.text.toString()
         val password = mBinding.editRegisterPassword.text.toString()
         val confirmPassword = mBinding.editRegisterConfirmPassword.text.toString()
-        val imageName ="https://github.com/HTIsME229/LTC-_Chuong1/blob/bai1/${selectedAvatar?.let { it.context.resources.getResourceEntryName(it.id)}}.png" ;
+        val imageName ="https://raw.githubusercontent.com/HTIsME229/LTC-_Chuong1/bai1/${selectedAvatar?.let { it.context.resources.getResourceEntryName(it.id)}}.png" ;
         val token  =MessengerUTILS.token
 
         if(token != null)
         {
             if(viewModel.loginDataChanged(email,userName,password,confirmPassword,imageName))
-            viewModel.register(User(userName,email,displayName,password,imageName,ArrayList(),token))
+            viewModel.register(User("0",userName,email,displayName,password,imageName,ArrayList(),ArrayList(),token))
         }
 
     }

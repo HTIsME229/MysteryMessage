@@ -34,4 +34,10 @@ object RepositoryModule {
     ): DefaultRepository {
         return DefaultRepository(localDataSource, remoteDataSource)
     }
+    @Provides
+    @Singleton
+    fun provideAuthenticationRepository(
+    ): AuthenticationRepository {
+        return  AuthenticationRepository()
+    }
 }

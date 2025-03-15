@@ -1,5 +1,6 @@
 package com.example.mysterymessage.ui.register
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
@@ -10,18 +11,22 @@ import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.data.source.DefaultRepository
 import com.example.mysterymessage.data.source.Repository
+import com.example.mysterymessage.data.source.remote.AuthenticationRepository
+import com.example.mysterymessage.data.source.remote.ResponseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 
 class RegisterViewModel @Inject constructor(
-    private val repository: DefaultRepository
-) :ViewModel() {
+    private val repository: DefaultRepository,
+    private val authenticationRepository: AuthenticationRepository,
+
+    ) :ViewModel() {
     private var user: MutableLiveData<User?> = MutableLiveData<User?>(null);
     val _user: LiveData<User?> = user
-    private var  registerState:MutableLiveData<String> = MutableLiveData()
-    val _registerState:LiveData<String> =registerState
+    private var  registerState:MutableLiveData<ResponseResult> = MutableLiveData()
+    val _registerState:LiveData<ResponseResult> =registerState
 
     private var registerFormState: MutableLiveData<RegisterFormState?> = MutableLiveData();
     val _registerFormState: LiveData<RegisterFormState?> = registerFormState
@@ -65,21 +70,31 @@ class RegisterViewModel @Inject constructor(
         return isValid
     }
 
+    @SuppressLint("SuspiciousIndentation")
     fun  register(user:User){
-        viewModelScope.launch {
-            try {
-                val mrepository = repository as Repository.RemoteRepository
-
-                Log.d("Register", "🔹 Bắt đầu gọi API createAccount...")
-                val result = mrepository.createAccount(user)
-                Log.d("Register", "✅ Kết quả đăng ký: $result") // Nếu không thấy log này, API có vấn đề
-                registerState.postValue(result)
-
-            } catch (e: Exception) {
-                Log.e("Register", "❌ Lỗi trong quá trình đăng ký: ${e.message}")
-                registerState.postValue("Error: ${e.message}")
+//        viewModelScope.launch {
+//            try {
+//                val mrepository = repository as Repository.RemoteRepository
+//
+//                Log.d("Register", "🔹 Bắt đầu gọi API createAccount...")
+//                val result = mrepository.createAccount(user)
+//                Log.d("Register", "✅ Kết quả đăng ký: $result") // Nếu không thấy log này, API có vấn đề
+//                registerState.postValue(result)
+//
+//            } catch (e: Exception) {
+//                Log.e("Register", "❌ Lỗi trong quá trình đăng ký: ${e.message}")
+//                registerState.postValue("Error: ${e.message}")
+//            }
+//
+//        }
+        authenticationRepository.registerUser(user) { success, message ->
+            if (success) {
+                val res = ResponseResult(success = success, error = null);
+                   registerState.postValue(res)
+            } else {
+                val res = ResponseResult(success = success, error = message);
+                registerState.postValue(res)
             }
-
         }
     }
     private fun isEmailValid(email: String):Boolean{

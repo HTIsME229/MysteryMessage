@@ -77,15 +77,10 @@ class FragmentLogin:Fragment() {
             if(it != null){
                 val currentDestination = navController.currentDestination
                 Log.d("NavDebug", "Current Destination: ${currentDestination?.label} (${currentDestination?.id})")
-                val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-                sharedPref.edit().putBoolean("LOGIN_SUCCESS", true).apply()
-
                 navController.popBackStack()
             }
         }
     }
 
-    companion object {
-        const val LOGIN_SUCCESS = "LOGIN_SUCCESS"
-    }
+
 }

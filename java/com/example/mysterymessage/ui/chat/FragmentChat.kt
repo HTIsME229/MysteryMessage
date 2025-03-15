@@ -1,5 +1,6 @@
 package com.example.mysterymessage.ui.chat
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import com.example.mysterymessage.databinding.FragmentChatBinding
 import com.example.mysterymessage.ui.login.FragmentLogin
 import com.example.mysterymessage.ui.login.FragmentLoginDirections
 import com.example.mysterymessage.ui.login.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,22 +46,23 @@ class FragmentChat : Fragment(), MenuProvider {
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return mBinding.root
     }
-
-
+    @SuppressLint("SuspiciousIndentation")
     private fun checkLogin() {
-        val sharedPref = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPref.getBoolean("LOGIN_SUCCESS", false)
-        if (!isLoggedIn) {
-            val currentDestination = navController.currentDestination
-            Log.d(
-                "NavDebug",
-                "Current Destination: ${currentDestination?.label} (${currentDestination?.id})"
-            )
-            val action = NavGraphDirections.actionGlobalFragmentLogin2()
-            navController.navigate(action)
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if(viewModel._profile.value == null)
+            if(currentUser == null){
+                val currentDestination = navController.currentDestination
+                Log.d(
+                    "NavDebug",
+                    "Current Destination: ${currentDestination?.label} (${currentDestination?.id})"
+                )
+                val action = NavGraphDirections.actionGlobalFragmentLogin2()
+                navController.navigate(action)
+            }
+        else{
+            viewModel.refreshUser(currentUser.uid)
         }
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
@@ -68,16 +71,11 @@ class FragmentChat : Fragment(), MenuProvider {
             val action = FragmentChatDirections.actionFragmentChatToFragmentAddFriend2()
             navController.navigate(action)
         }
-
-
         viewModel._profile.observe(viewLifecycleOwner) {
-            Log.d("ProfileObserver", "Avatar URL: $it")
             if (it != null)
                 updateAvatar()
         }
-
     }
-
     private fun updateAvatar() {
         val user = viewModel._profile.value
         if (user != null) {
@@ -101,8 +99,6 @@ class FragmentChat : Fragment(), MenuProvider {
         }
 
     }
-
-
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_chat_fragment, menu)
         val actionView = menu.findItem(R.id.menu_avatar).actionView
@@ -122,12 +118,6 @@ class FragmentChat : Fragment(), MenuProvider {
 
 
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("check Destroy ", "Destroy");
-    }
-
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return true
     }

@@ -4,6 +4,8 @@ import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.data.source.remote.ResponseResult
 import com.example.mysterymessage.ui.login.LoginData
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
+import retrofit2.http.Body
 import javax.inject.Inject
 
 class DefaultRepository
@@ -11,9 +13,7 @@ class DefaultRepository
     private val localDataSource: DataSource.LocalDataSource,
     private val remoteDataSource: DataSource.RemoteDataSource
 ):Repository.RemoteRepository {
-    override fun login(user: LoginData): Flow<User?> {
-        return remoteDataSource.login(user)
-    }
+
 
     override suspend fun createAccount(user: User): String {
         return remoteDataSource.createAccount(user)
@@ -32,5 +32,8 @@ class DefaultRepository
         friendUserName: String
     ): ResponseResult {
         return remoteDataSource.sendFriendRequest(userName,friendUserName)
+    }
+    override suspend fun  findUserWithUID(uid: String): Flow<User?>{
+        return remoteDataSource.findUserWithUID(uid)
     }
 }

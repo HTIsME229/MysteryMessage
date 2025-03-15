@@ -71,24 +71,6 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
         return false
     }
 
-    override fun login(user: LoginData): Flow<User?> = flow {
-        val baseUrl = "https://login-n6eo3bsn3a-uc.a.run.app"
-        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
-
-        try {
-            val response = retrofit.login(user) // Thực thi request đồng bộ
-            Log.d("CheckLogCall", "After API call")
-
-            if (response.isSuccessful) {
-                emit(response.body()) // Phát dữ liệu nếu thành công
-            } else {
-                emit(null) // Xử lý lỗi API
-            }
-        } catch (e: Exception) {
-            Log.e("CheckLogCall", "API call failed", e)
-            emit(null) // Xử lý lỗi mạng hoặc ngoại lệ
-        }
-    }.flowOn(Dispatchers.IO) // Đặt Dispatcher cho Flow
 
     override suspend fun sendFriendRequest(
         userName: String,
@@ -114,6 +96,27 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
 
         }
     }
+
+    override fun findUserWithUID(uid: String): Flow<User?> = flow {
+        val baseUrl = "https://finduserwithuid-n6eo3bsn3a-uc.a.run.app"
+        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
+        val body = mapOf<String,String>(
+            "uid" to uid
+        )
+        try {
+            val response = retrofit.findUserWithUID(body) // Thực thi request đồng bộ
+            Log.d("CheckLogCall", "After API call")
+
+            if (response.isSuccessful) {
+                emit(response.body()) // Phát dữ liệu nếu thành công
+            } else {
+                emit(null) // Xử lý lỗi API
+            }
+        } catch (e: Exception) {
+            Log.e("CheckLogCall", "API call failed", e)
+            emit(null) // Xử lý lỗi mạng hoặc ngoại lệ
+        }
+    }.flowOn(Dispatchers.IO)
 
 
     private fun createRetrofitService(baseUrl: String): Retrofit {
