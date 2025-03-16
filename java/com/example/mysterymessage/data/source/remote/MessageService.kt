@@ -28,4 +28,8 @@ interface MessageService {
     suspend fun findUserWithUID(@Body request: Map<String, String>): Response<User?>
     @POST("/")
     suspend fun findListFriendRequestWithUID(@Body request: Map<String, String>):Response<List<User>?>
+    @POST("/")
+    suspend fun findListFriendWithUID(@Body request: Map<String, String>):Response<List<User>?>
+    @POST("/")
+    suspend fun acceptFriendRequest(@Body dataAddFriend: DataAddFriend):Response<String>
 }

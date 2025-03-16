@@ -59,7 +59,7 @@ class LoginViewModel@Inject constructor(
 
             }
     }
-    fun refreshUser(uuid: String){
+    fun  refreshUser(uuid: String){
         viewModelScope.launch {
             repository.findUserWithUID(uuid).collectLatest {
                 if(it != null){

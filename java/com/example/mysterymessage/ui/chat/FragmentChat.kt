@@ -24,6 +24,7 @@ import com.example.mysterymessage.NavGraphDirections
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentChatBinding
+import com.example.mysterymessage.ui.chat.adapter.SkeletonAdapter
 import com.example.mysterymessage.ui.login.FragmentLogin
 import com.example.mysterymessage.ui.login.FragmentLoginDirections
 import com.example.mysterymessage.ui.login.LoginViewModel
@@ -48,6 +49,7 @@ class FragmentChat : Fragment(), MenuProvider {
     }
     @SuppressLint("SuspiciousIndentation")
     private fun checkLogin() {
+        mBinding.progressBar.visibility=View.VISIBLE
         val currentUser = FirebaseAuth.getInstance().currentUser
         if(viewModel._profile.value == null)
             if(currentUser == null){
@@ -62,6 +64,7 @@ class FragmentChat : Fragment(), MenuProvider {
         else{
             viewModel.refreshUser(currentUser.uid)
         }
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,8 +76,17 @@ class FragmentChat : Fragment(), MenuProvider {
         }
         viewModel._profile.observe(viewLifecycleOwner) {
             if (it != null)
+            {
                 updateAvatar()
+                mBinding.progressBar.visibility=View.GONE
+                }
         }
+       val skeletonAdapter = SkeletonAdapter()
+        mBinding.recyclerFriendMessageSkeleton.adapter=skeletonAdapter
+        mBinding.recyclerFriendMessageSkeleton.visibility = View.VISIBLE // Hiện shimmer
+
+        mBinding.shimmerViewContainer.startShimmer() // Bắt đầu shimmer effect
+        mBinding.recyclerFriendMessage.visibility = View.GONE // Ẩn danh sách thật
     }
     private fun updateAvatar() {
         val user = viewModel._profile.value

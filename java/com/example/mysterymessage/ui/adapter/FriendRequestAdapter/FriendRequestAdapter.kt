@@ -21,12 +21,13 @@ class FriendRequestAdapter(
     private lateinit var binding : ItemFriendRequestBinding;
     var listFriendRequest:List<User>? = ArrayList()
     @SuppressLint("NotifyDataSetChanged")
-    fun updateListFriendRequest(listUser:List<User>){
+    fun updateListFriendRequest(listUser:List<User>?){
         listFriendRequest = listUser
         notifyDataSetChanged()
 
     }
     inner class  ViewHolder(context: Context,itemView:View):RecyclerView.ViewHolder(itemView){
+        @SuppressLint("NotifyDataSetChanged")
         fun  bindData(user:User){
             Glide.with(context) // hoặc requireContext() nếu trong Fragment
                 .load(user.avatar) // URL ảnh

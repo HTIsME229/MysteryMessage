@@ -12,6 +12,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentFriendBinding
@@ -19,38 +20,77 @@ import com.example.mysterymessage.ui.adapter.FriendAdpater.FriendAdapter
 import com.example.mysterymessage.ui.adapter.FriendRequestAdapter.FriendRequestAdapter
 import com.example.mysterymessage.ui.login.LoginViewModel
 
+
 class FragmentFriend :Fragment(),MenuProvider{
     private lateinit var binding:FragmentFriendBinding
     private val loginViewModel: LoginViewModel by activityViewModels()
     private val friendViewModel: FriendViewModel by activityViewModels()
-
-    private lateinit var adapter:FriendRequestAdapter
+    private lateinit var friendRequestAdapter:FriendRequestAdapter
+    private lateinit var friendAdapter: FriendAdapter
+    private lateinit var  swipeRefreshLayout: SwipeRefreshLayout
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter= FriendRequestAdapter(object : FriendRequestAdapter.OnItemRequsestFriendClickListener {
-            override fun onAcceptRequest(user: User) {
+swipeRefreshLayout= binding.swipeRefreshLayout
+        friendAdapter= FriendAdapter(requireContext())
 
+        friendRequestAdapter= FriendRequestAdapter(object : FriendRequestAdapter.OnItemRequsestFriendClickListener {
+            override fun onAcceptRequest(user: User) {
+             friendViewModel.acceptFriendRequest(loginViewModel._profile.value!!.userName,user.userName)
             }
 
             override fun onCancelRequest(user: User) {
             }
 
         },requireContext())
+        binding.recyclerFriendRequest.adapter = friendRequestAdapter
+
+
         loginViewModel._profile.observe(viewLifecycleOwner){
             if(it != null){
-                friendViewModel.listFriendRequestByUid(it.uid)
+                friendViewModel.listFriendRequestByUid(it.uid,false)
+                friendViewModel.listFriendByUid(it.uid,false)
             }
         }
+
         friendViewModel._listFriendRequest.observe(viewLifecycleOwner){
             if(it != null){
                 setUpView(it)
+                swipeRefreshLayout.isRefreshing=false
+
             }
         }
+        friendViewModel._listFriendAdd.observe(viewLifecycleOwner){
+            if(it!= null){
+                swipeRefreshLayout.isRefreshing=false
+            }
+        }
+
+        setUpAction()
+
     }
 
-    private fun setUpView(list: List<User>) {
-        adapter.updateListFriendRequest(list)
-        binding.recyclerFriendRequest.adapter=adapter
+    private fun setUpAction() {
+
+        binding.btnFriends.setOnClickListener{
+
+            friendAdapter.updateListFriend(friendViewModel._listFriendAdd.value)
+            binding.recyclerFriendRequest.adapter=friendAdapter
+        }
+        binding.btnRequestFriend.setOnClickListener{
+            binding.recyclerFriendRequest.adapter=friendRequestAdapter
+        }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            loginViewModel._profile.value?.let {
+                friendViewModel.listFriendRequestByUid(it.uid,true)
+                friendViewModel.listFriendByUid(it.uid,true )
+            }
+       }
+
+    }
+
+    private fun setUpView(list: List<User>?) {
+        friendRequestAdapter.updateListFriendRequest(list)
     }
 
     override fun onCreateView(

@@ -40,4 +40,13 @@ class DefaultRepository
     override  fun findListFriendRequestWithUID(uid: String): Flow<List<User>?> {
        return remoteDataSource.findListFriendRequestWithUID(uid)
     }
+
+    override fun findListFriendWithUID(uid: String): Flow<List<User>?> {
+        return remoteDataSource.findListFriendWithUID(uid)
+    }
+
+    override suspend fun acceptFriendRequest(userName: String, friendUserName: String): String {
+        return remoteDataSource.acceptFriendRequest(userName,friendUserName)
+    }
+
 }

@@ -78,7 +78,7 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
     ): ResponseResult {
         Log.d("CheckLogCallfriend", "Before API call send friend")
 
-        val baseUrl = "https://sendfriendrequest-n6eo3bsn3a-uc.a.run.app\n"
+        val baseUrl = "https://sendfriendrequest-n6eo3bsn3a-uc.a.run.app"
         val dataAddFriend = DataAddFriend(userName,friendUserName)
         val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
 
@@ -136,6 +136,49 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
             e.message?.let { Log.d("call api ", it) }// Bắt lỗi nếu có exception
         }
     }.flowOn(Dispatchers.IO)
+
+    override fun findListFriendWithUID(uid: String): Flow<List<User>?> = flow {
+        val baseUrl = "https://findlistfriendbyuid-n6eo3bsn3a-uc.a.run.app"
+        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
+        val body = mapOf<String,String>(
+            "uid" to uid
+        )
+        try {
+            val response = retrofit.findListFriendWithUID(body) // Gọi API
+            if (response.isSuccessful) {
+                emit(response.body()) // Trả về dữ liệu nếu thành công
+            } else {
+                emit(null) // Trả về `null` nếu API lỗi
+            }
+        } catch (e: Exception) {
+            emit(null)
+            e.message?.let { Log.d("call api ", it) }// Bắt lỗi nếu có exception
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun acceptFriendRequest(userName: String, friendUserName: String): String {
+
+        val baseUrl = "https://acceptfriendrequest-n6eo3bsn3a-uc.a.run.app"
+        val dataAddFriend = DataAddFriend(userName,friendUserName)
+        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
+
+        try {
+            val response = retrofit.acceptFriendRequest(dataAddFriend)
+            if(response.isSuccessful){
+                return response.body()!!
+            }
+            else{
+                return response.body()!!
+            }
+        }
+        catch (e:Exception){
+            return e.message.let {
+                it?:""
+            }
+
+        }
+    }
+
     private fun createRetrofitService(baseUrl: String): Retrofit {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY  // Log toàn bộ request/response
