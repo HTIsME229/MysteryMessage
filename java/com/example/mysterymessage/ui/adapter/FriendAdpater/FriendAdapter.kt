@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
-import com.example.mysterymessage.databinding.ItemContactBinding
 import com.example.mysterymessage.databinding.ItemFriendBinding
-import com.example.mysterymessage.databinding.ItemFriendRequestBinding
 
 class FriendAdapter(
-    private val context: Context
+    private val context: Context,
+    private val listener:onItemMessageClickListener
 ) :RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
     private lateinit var binding: ItemFriendBinding;
     var listFriend: List<User>? = ArrayList()
@@ -28,6 +27,7 @@ class FriendAdapter(
 
     }
 
+
     inner class ViewHolder(context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("NotifyDataSetChanged")
         fun bindData(user: User) {
@@ -38,6 +38,9 @@ class FriendAdapter(
                 .circleCrop() // Cắt ảnh thành hình tròn (tuỳ chọn)
                 .into(binding.ivProfile);
             binding.tvName.text = user.userName
+            binding.btnMessage.setOnClickListener{
+                listener.onItemClick(user)
+            }
 
 
         }
@@ -54,5 +57,8 @@ class FriendAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         listFriend?.get(position)?.let { holder.bindData(it) }
+    }
+    interface onItemMessageClickListener{
+        fun  onItemClick(user: User)
     }
 }

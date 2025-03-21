@@ -1,6 +1,7 @@
 package com.example.mysterymessage.ui.AddFriend
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,10 +13,12 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentFriendBinding
+import com.example.mysterymessage.ui.MessageOptionDialog.MessageOptionsBottomSheet
 import com.example.mysterymessage.ui.adapter.FriendAdpater.FriendAdapter
 import com.example.mysterymessage.ui.adapter.FriendRequestAdapter.FriendRequestAdapter
 import com.example.mysterymessage.ui.login.LoginViewModel
@@ -31,7 +34,24 @@ class FragmentFriend :Fragment(),MenuProvider{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 swipeRefreshLayout= binding.swipeRefreshLayout
-        friendAdapter= FriendAdapter(requireContext())
+        friendAdapter= FriendAdapter(requireContext(),
+            object :FriendAdapter.onItemMessageClickListener{
+                override fun onItemClick(user: User) {
+                    val bottomSheet = MessageOptionsBottomSheet(object :
+                        MessageOptionsBottomSheet.OnOptionClickListener{
+                        override fun onOptionSelect(option: String) {
+                            when(option){
+                                "secret_message" ->{
+                                    Log.d("checkUser",user.toString())
+                                    friendViewModel.setSelectedFriend(user)
+                                 findNavController().navigate(FragmentFriendDirections.actionFragmentFriendToFragmentSecretMessage())                             }
+                            }
+                        }
+                    })
+                    bottomSheet.show(parentFragmentManager, "OptionSendMessageBottomSheet")
+                }
+
+            })
 
         friendRequestAdapter= FriendRequestAdapter(object : FriendRequestAdapter.OnItemRequsestFriendClickListener {
             override fun onAcceptRequest(user: User) {

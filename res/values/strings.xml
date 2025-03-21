@@ -52,5 +52,12 @@
     <string name="friends">Friends</string>
     <string name="text_btn_cancel">Cancel</string>
     <string name="text_btn_accept">Accept</string>
+    <string name="timed_box">Timed Box</string>
+    <string name="hint_enter_your_question">Enter Your Question</string>
+    <string name="question">Question:</string>
+    <string name="secret_message">Secret Message</string>
+    <string name="answer">Answer:</string>
+    <string name="hint_enter_your_answer_here">Enter your answer here...</string>
+    <string name="next">Next</string>
 
 </resources>

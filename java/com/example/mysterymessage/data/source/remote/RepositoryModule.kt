@@ -40,4 +40,10 @@ object RepositoryModule {
     ): AuthenticationRepository {
         return  AuthenticationRepository()
     }
+    @Provides
+    @Singleton
+    fun provideScheduleNotification(
+    ): ScheduleNotification {
+        return  ScheduleNotification()
+    }
 }

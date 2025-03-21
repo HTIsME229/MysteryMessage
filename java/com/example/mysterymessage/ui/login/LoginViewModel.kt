@@ -1,10 +1,7 @@
 package com.example.mysterymessage.ui.login
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
-import androidx.core.util.PatternsCompat
-import androidx.credentials.provider.AuthenticationAction
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +15,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.uuid.Uuid
 
 @HiltViewModel
 class LoginViewModel@Inject constructor(
@@ -35,6 +31,9 @@ class LoginViewModel@Inject constructor(
 
     init {
 
+    }
+    fun  getProfile():User?{
+        return _profile.value
     }
         fun login(userName:String ,password: String,token:String) {
             authenticationRepository.loginUser(userName,password,token){

@@ -1,4 +1,6 @@
 package com.example.mysterymessage.ui.MessageOptionDialog.SecretMessage.FragmentStepSendMessage
 
-interface StepNavigater {
+interface StepNavigator {
+    fun goToNextStep()
+    fun backStep()
 }

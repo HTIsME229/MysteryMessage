@@ -1,6 +1,7 @@
 package com.example.mysterymessage.data.source
 
 import com.example.mysterymessage.data.model.User
+import com.example.mysterymessage.data.model.dto.DataSecretMessage
 import com.example.mysterymessage.data.source.remote.ResponseResult
 import com.example.mysterymessage.ui.login.LoginData
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,7 @@ interface DataSource {
          fun findListFriendRequestWithUID( uid: String):Flow<List<User>?>
          fun findListFriendWithUID( uid: String):Flow<List<User>?>
         suspend fun acceptFriendRequest (userName:String,friendUserName:String):String
+        suspend fun schedulePushNotification(dataSecretMessage: DataSecretMessage):ResponseResult
 
 
     }

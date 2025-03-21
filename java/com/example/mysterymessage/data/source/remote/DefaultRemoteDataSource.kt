@@ -2,22 +2,18 @@ package com.example.mysterymessage.data.source.remote
 
 import android.util.Log
 import com.example.mysterymessage.data.model.User
+import com.example.mysterymessage.data.model.dto.DataSecretMessage
 import com.example.mysterymessage.data.source.DataSource
 import com.example.mysterymessage.ui.AddFriend.DataAddFriend
 import com.example.mysterymessage.ui.AddFriend.UsernameRequest
-import com.example.mysterymessage.ui.login.LoginData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 class DefaultRemoteDataSource :DataSource.RemoteDataSource {
     override suspend fun findUserByUserName(username: String): Flow<List<User>?> = flow {
@@ -176,6 +172,19 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
                 it?:""
             }
 
+        }
+    }
+
+    override suspend fun schedulePushNotification(dataSecretMessage: DataSecretMessage): ResponseResult {
+        val baseUrl = "https://schedulepushnotification-n6eo3bsn3a-uc.a.run.app"
+
+        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
+        val result = retrofit.schedulePushNotification(dataSecretMessage)
+        if(result.isSuccessful){
+            return result.body()!!
+        }
+        else{
+            return ResponseResult(success = false, error = "server error")
         }
     }
 

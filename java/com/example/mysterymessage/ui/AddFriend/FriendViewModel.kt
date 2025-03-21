@@ -25,8 +25,16 @@ class FriendViewModel @Inject constructor(
     val _listFriendRequest :LiveData<List<User>?>  = listFriendRequest
     private var hasFetchedFriend = false
     private var hasFetchedFriendRequest = false
+    private var selectedFriend:MutableLiveData<User?> = MutableLiveData()
+    val _selectedFriend :LiveData<User?>  = selectedFriend
 
 
+fun setSelectedFriend(user: User){
+    selectedFriend.postValue(user)
+}
+    fun getSelectedFriend():User?{
+        return selectedFriend.value
+}
     fun searchUser(username: String) {
         viewModelScope.launch {
             repository.findUserByUserName(username)
