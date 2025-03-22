@@ -1,7 +1,9 @@
 package com.example.mysterymessage.data.model.dto
 
-import com.example.mysterymessage.ui.MessageOptionDialog.SecretMessage.FragmentStepSendMessage.MutipleChoiceFragment
-
+import android.os.Parcelable
+import com.google.gson.Gson
+import kotlinx.parcelize.Parcelize
+@Parcelize
 data class DataSecretMessage(
     var message: String = "",
     var title: String = "",
@@ -10,12 +12,21 @@ data class DataSecretMessage(
     var userReceiverId: String = "",
     var sendTime: String = "",
     var dataQuestion: DataQuestion = DataQuestion("","")
-)
+):Parcelable
+@Parcelize
 data class DataQuestion(
-    val question:String,
-    val answer:String,
+    val question:String="",
+    val answer:String="",
     val multipleChoice:MultipleChoice?= null,
-)
+
+) : Parcelable{
+    companion object {
+        fun fromJson(json: String): DataQuestion {
+            return Gson().fromJson(json, DataQuestion::class.java)
+        }
+    }
+}
+@Parcelize
 data class MultipleChoice(
     val question:String = "",
     val choice1:String="",
@@ -23,4 +34,4 @@ data class MultipleChoice(
     val choice3:String="",
     val choice4:String="",
     val correctAnswer:String=""
-)
+):Parcelable

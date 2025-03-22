@@ -1,21 +1,17 @@
 package com.example.mysterymessage
 
 import android.Manifest
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -24,9 +20,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.mysterymessage.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.time.Duration
+
 @AndroidEntryPoint
 
 class MainActivity : AppCompatActivity() {
@@ -66,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_chat, R.id.nav_call,R.id.nav_phone_book,R.id.nav_login),
+            setOf(R.id.nav_chat, R.id.nav_call,R.id.nav_phone_book,R.id.nav_login,R.id.nav_secret_message),
 
             )
 
@@ -74,6 +69,8 @@ class MainActivity : AppCompatActivity() {
         requestPermission()
         retriveToken()
     }
+
+
 
     private fun retriveToken() {
         FirebaseMessaging.getInstance().token

@@ -8,10 +8,37 @@
     <action
         android:id="@+id/action_global_fragmentLogin2"
         app:destination="@id/nav_login" />
+    <action
+        android:id="@+id/action_global_nav_secret_message"
+        app:destination="@id/nav_secret_message" >
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="message"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="userReceiverId"
+            app:argType="string"
+            android:defaultValue="" />
+
+        <argument
+            android:name="userNameSender"
+            app:argType="string"
+            android:defaultValue="" />
+
+        <argument
+            android:name="dataQuestion"
+            app:argType="com.example.mysterymessage.data.model.dto.DataQuestion" />
+    </action>
     <include app:graph="@navigation/nav_chat"/>
     <include app:graph="@navigation/nav_call" />
     <include app:graph="@navigation/nav_phone_book" />
     <include app:graph="@navigation/nav_login" />
+    <include app:graph="@navigation/nav_secret_message" />
+
 
 
 </navigation>

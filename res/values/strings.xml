@@ -59,5 +59,9 @@
     <string name="answer">Answer:</string>
     <string name="hint_enter_your_answer_here">Enter your answer here...</string>
     <string name="next">Next</string>
+    <string name="your_answer">Your answer</string>
+    <string name="submit">Submit</string>
+    <string name="title_answer_message">Answer Secret Message</string>
+    <string name="title_secret_message_detail">Your Secret Message</string>
 
 </resources>

@@ -36,9 +36,9 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
-            android:drawableLeft="@drawable/ic_message"
+            android:drawableLeft="@drawable/incognito_32"
             android:gravity="center"
-            android:text="Secret Message" />
+            android:text="@string/secret_message" />
 
         <!-- Button 2 -->
         <Button
