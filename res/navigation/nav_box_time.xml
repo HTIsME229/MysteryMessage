@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_chat"
-    app:startDestination="@id/fragmentChat">
+    app:startDestination="@id/fragmentBoxTime">
 
     <fragment
-        android:id="@+id/fragmentChat"
-        android:name="com.example.mysterymessage.ui.chat.FragmentChat"
+        android:id="@+id/fragmentBoxTime"
+        android:name="com.example.mysterymessage.ui.chat.FragmentBoxTime"
         android:label="Recent Chats">
         <action
-            android:id="@+id/action_fragmentChat_to_fragmentSettings2"
-            app:destination="@id/fragmentSettings" />
-        <action
-            android:id="@+id/action_fragmentChat_to_fragmentAddFriend2"
+            android:id="@+id/action_fragmentBoxTime_to_fragmentAddFriend2"
             app:destination="@id/fragmentAddFriend2" />
+        <action
+            android:id="@+id/action_fragmentBoxTime_to_fragmentSettings"
+            app:destination="@id/fragmentSettings" />
     </fragment>
-    <action android:id="@+id/action_global_fragmentChat" app:destination="@id/fragmentChat" />
+    <action android:id="@+id/action_global_fragmentChat" app:destination="@id/fragmentBoxTime" />
     <fragment
         android:id="@+id/fragmentAddFriend2"
         android:name="com.example.mysterymessage.ui.AddFriend.FragmentAddFriend"

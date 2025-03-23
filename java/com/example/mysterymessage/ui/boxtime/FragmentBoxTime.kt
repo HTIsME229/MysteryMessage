@@ -1,7 +1,6 @@
 package com.example.mysterymessage.ui.chat
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,25 +13,20 @@ import android.widget.ImageView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.mysterymessage.NavGraphDirections
 import com.example.mysterymessage.R
-import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentChatBinding
 import com.example.mysterymessage.ui.chat.adapter.SkeletonAdapter
-import com.example.mysterymessage.ui.login.FragmentLogin
-import com.example.mysterymessage.ui.login.FragmentLoginDirections
 import com.example.mysterymessage.ui.login.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentChat : Fragment(), MenuProvider {
+class FragmentBoxTime : Fragment(), MenuProvider {
     private lateinit var mBinding: FragmentChatBinding
     private lateinit var navController: NavController
     private var avatar: ImageView? = null
@@ -71,7 +65,7 @@ class FragmentChat : Fragment(), MenuProvider {
         navController = findNavController()
         checkLogin()
         mBinding.floatingActionButton.setOnClickListener {
-            val action = FragmentChatDirections.actionFragmentChatToFragmentAddFriend2()
+            val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentAddFriend2()
             navController.navigate(action)
         }
         viewModel._profile.observe(viewLifecycleOwner) {
@@ -123,7 +117,7 @@ class FragmentChat : Fragment(), MenuProvider {
                 "NavDebug",
                 "Current Destination: ${currentDestination?.label} (${currentDestination?.id})"
             )
-            val action = FragmentChatDirections.actionFragmentChatToFragmentSettings2()
+            val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentSettings()
             navController.navigate(action)
         }
         updateAvatar()
