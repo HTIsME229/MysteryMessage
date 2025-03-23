@@ -1,6 +1,5 @@
 package com.example.mysterymessage.ui.settings
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentSettingBinding
-import com.example.mysterymessage.ui.chat.FragmentChatDirections
 import com.example.mysterymessage.ui.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

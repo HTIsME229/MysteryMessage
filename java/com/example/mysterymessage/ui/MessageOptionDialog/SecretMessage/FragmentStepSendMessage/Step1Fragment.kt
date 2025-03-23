@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.mysterymessage.data.model.dto.DataSecretMessage
 import com.example.mysterymessage.databinding.FragmentStep1SecretMessageBinding
 import com.example.mysterymessage.ui.MessageOptionDialog.SecretMessage.viewmodel.SecretMessageViewModel
-import com.example.mysterymessage.ui.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +38,9 @@ class Step1Fragment:Fragment (){
                 (requireParentFragment() as? StepNavigator)?.goToNextStep()
             }
 
+        }
+        binding.btnClose.setOnClickListener{
+            findNavController().popBackStack()
         }
     }
 }

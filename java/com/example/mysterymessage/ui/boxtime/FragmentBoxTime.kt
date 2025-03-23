@@ -1,4 +1,4 @@
-package com.example.mysterymessage.ui.chat
+package com.example.mysterymessage.ui.boxtime
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -19,24 +19,28 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.mysterymessage.NavGraphDirections
 import com.example.mysterymessage.R
-import com.example.mysterymessage.databinding.FragmentChatBinding
-import com.example.mysterymessage.ui.chat.adapter.SkeletonAdapter
+import com.example.mysterymessage.databinding.FragmentBoxTimeBinding
+import com.example.mysterymessage.ui.boxtime.adapter.ScheduledMessageAdapter
+import com.example.mysterymessage.ui.boxtime.adapter.SkeletonAdapter
+import com.example.mysterymessage.ui.boxtime.viewmodel.BoxTimeViewModel
 import com.example.mysterymessage.ui.login.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FragmentBoxTime : Fragment(), MenuProvider {
-    private lateinit var mBinding: FragmentChatBinding
+    private lateinit var mBinding: FragmentBoxTimeBinding
     private lateinit var navController: NavController
     private var avatar: ImageView? = null
+    private lateinit var adapter: ScheduledMessageAdapter
     private val viewModel: LoginViewModel by activityViewModels()
+    private val scheduledMessageViewModel: BoxTimeViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding = FragmentChatBinding.inflate(inflater, container, false)
+        mBinding = FragmentBoxTimeBinding.inflate(inflater, container, false)
         val menuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         return mBinding.root
@@ -81,6 +85,26 @@ class FragmentBoxTime : Fragment(), MenuProvider {
 
         mBinding.shimmerViewContainer.startShimmer() // Bắt đầu shimmer effect
         mBinding.recyclerFriendMessage.visibility = View.GONE // Ẩn danh sách thật
+        adapter = ScheduledMessageAdapter(requireContext())
+        mBinding.recyclerFriendMessage.adapter = adapter
+        viewModel._profile.observe(viewLifecycleOwner)
+        {
+            if(it != null)
+            {
+                scheduledMessageViewModel.loadScheduledMessageData(it.userName,false)
+            }
+        }
+        scheduledMessageViewModel._scheduledMessageListLiveData.observe(viewLifecycleOwner)
+        {
+            if(it != null)
+            {
+                adapter.updateListScheduleMessage(it)
+                mBinding.recyclerFriendMessageSkeleton.visibility = View.GONE
+                mBinding.shimmerViewContainer.stopShimmer()
+                mBinding.shimmerViewContainer.visibility = View.GONE
+                mBinding.recyclerFriendMessage.visibility = View.VISIBLE
+            }
+        }
     }
     private fun updateAvatar() {
         val user = viewModel._profile.value
@@ -117,7 +141,7 @@ class FragmentBoxTime : Fragment(), MenuProvider {
                 "NavDebug",
                 "Current Destination: ${currentDestination?.label} (${currentDestination?.id})"
             )
-            val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentSettings()
+            val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentSettings3()
             navController.navigate(action)
         }
         updateAvatar()

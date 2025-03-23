@@ -30,7 +30,7 @@ class FragmentDetailSecretMessage:Fragment() {
         val userNameSender = args?.getString("userNameSender")
         setUpView(title,message,userNameSender)
         binding.btnClose.setOnClickListener{
-            findNavController().popBackStack(R.id.fragmentChat, true)
+            findNavController().popBackStack(R.id.fragmentBoxTime, true)
         }
     }
 

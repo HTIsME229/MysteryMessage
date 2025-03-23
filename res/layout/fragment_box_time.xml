@@ -23,7 +23,7 @@
         app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_all_chats"
+            android:id="@+id/btn_schedule"
             style="@style/ToggleButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -31,37 +31,28 @@
             android:checked="true"
             android:minWidth="80dp"
             android:paddingHorizontal="8dp"
-            android:text="All chats" />
+            android:text="@string/btn_message_schedule" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_personal"
+            android:id="@+id/btn_sent"
             style="@style/ToggleButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:minWidth="80dp"
             android:paddingHorizontal="8dp"
-            android:text="Personal" />
+            android:text="@string/btn_message_sent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_work"
+            android:id="@+id/btn_canceled"
             style="@style/ToggleButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:minWidth="80dp"
             android:paddingHorizontal="8dp"
-            android:text="Work" />
+            android:text="@string/btn_message_canceled" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_groups"
-            style="@style/ToggleButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minWidth="80dp"
-            android:paddingHorizontal="8dp"
-            android:text="Groups" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <!-- Danh sách chat -->
@@ -76,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chat_categories"
-        tools:listitem="@layout/chat_item" />
+        tools:listitem="@layout/box_time_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

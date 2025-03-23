@@ -188,6 +188,27 @@ class DefaultRemoteDataSource :DataSource.RemoteDataSource {
         }
     }
 
+    override fun getScheduleMessage(uid: String): Flow<List<DataSecretMessage>?> {
+        val baseUrl = "https://getmessageinscheduled-n6eo3bsn3a-uc.a.run.app"
+        val retrofit = createRetrofitService(baseUrl).create(MessageService::class.java)
+        val body = mapOf<String,String>(
+            "userName" to uid
+        )
+        return flow {
+            try {
+                val response = retrofit.getScheduleMessage(body) // Thực thi request đồng bộ
+                if (response.isSuccessful) {
+                    emit(response.body()) // Phát dữ liệu nếu thành công
+                } else {
+                    emit(null) // Xử lý lỗi API
+                }
+            } catch (e: Exception) {
+                emit(null) // Xử lý lỗi mạng hoặc ngoại lệ
+            }
+        }.flowOn(Dispatchers.IO)
+
+    }
+
     private fun createRetrofitService(baseUrl: String): Retrofit {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY  // Log toàn bộ request/response

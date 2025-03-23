@@ -2,18 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_chat"
+    android:id="@+id/nav_box_time"
     app:startDestination="@id/fragmentBoxTime">
 
     <fragment
         android:id="@+id/fragmentBoxTime"
-        android:name="com.example.mysterymessage.ui.chat.FragmentBoxTime"
+        android:name="com.example.mysterymessage.ui.boxtime.FragmentBoxTime"
         android:label="Recent Chats">
         <action
             android:id="@+id/action_fragmentBoxTime_to_fragmentAddFriend2"
             app:destination="@id/fragmentAddFriend2" />
         <action
-            android:id="@+id/action_fragmentBoxTime_to_fragmentSettings"
+            android:id="@+id/action_fragmentBoxTime_to_fragmentSettings3"
             app:destination="@id/fragmentSettings" />
     </fragment>
     <action android:id="@+id/action_global_fragmentChat" app:destination="@id/fragmentBoxTime" />

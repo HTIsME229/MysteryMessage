@@ -3,10 +3,7 @@ package com.example.mysterymessage.data.source
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.data.model.dto.DataSecretMessage
 import com.example.mysterymessage.data.source.remote.ResponseResult
-import com.example.mysterymessage.ui.login.LoginData
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
-import retrofit2.http.Body
 import javax.inject.Inject
 
 class DefaultRepository
@@ -52,6 +49,10 @@ class DefaultRepository
 
     override suspend fun schedulePushNotification(dataSecretMessage: DataSecretMessage): ResponseResult {
         return remoteDataSource.schedulePushNotification(dataSecretMessage)
+    }
+
+    override fun getScheduleMessage(uid: String): Flow<List<DataSecretMessage>?> {
+        return remoteDataSource.getScheduleMessage(uid)
     }
 
 }

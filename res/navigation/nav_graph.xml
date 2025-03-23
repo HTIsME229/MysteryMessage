@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     tools:ignore="InvalidNavigation"
-    app:startDestination="@id/nav_chat">
+    app:startDestination="@id/nav_box_time">
     <action
         android:id="@+id/action_global_fragmentLogin2"
         app:destination="@id/nav_login" />
@@ -33,7 +33,7 @@
             android:name="dataQuestion"
             app:argType="com.example.mysterymessage.data.model.dto.DataQuestion" />
     </action>
-    <include app:graph="@navigation/nav_chat"/>
+    <include app:graph="@navigation/nav_box_time"/>
     <include app:graph="@navigation/nav_call" />
     <include app:graph="@navigation/nav_phone_book" />
     <include app:graph="@navigation/nav_login" />

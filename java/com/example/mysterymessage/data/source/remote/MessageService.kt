@@ -33,4 +33,6 @@ interface MessageService {
     suspend fun acceptFriendRequest(@Body dataAddFriend: DataAddFriend):Response<String>
     @POST("/schedulePushNotification")
     suspend fun schedulePushNotification(@Body dataSecretMessage: DataSecretMessage):Response<ResponseResult>
+    @POST("/")
+    suspend fun getScheduleMessage(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
 }

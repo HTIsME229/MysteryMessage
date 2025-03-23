@@ -63,5 +63,24 @@
     <string name="submit">Submit</string>
     <string name="title_answer_message">Answer Secret Message</string>
     <string name="title_secret_message_detail">Your Secret Message</string>
+    <string name="close">Close</string>
+    <string name="submit_question">Submit Question</string>
+    <string name="message_send_message">Are you sure you want to send this message?</string>
+    <string name="title_send_message">Send Secret Message</string>
+    <string name="button_send">Send</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="quiz_question">Quiz Question</string>
+    <string name="enter_your_question_here">Enter your question here</string>
+    <string name="options">Options</string>
+    <string name="option_1">Option 1</string>
+    <string name="option_2">Option 2</string>
+    <string name="option_3">Option 3</string>
+    <string name="option_4">Option 4</string>
+    <string name="btn_message_canceled">Canceled</string>
+    <string name="btn_message_sent">Sent</string>
+    <string name="btn_message_schedule">Scheduled</string>
+    <string name ="message_title">Title: %s</string>
+    <string name ="message_sendTime">Time Send: %s</string>
+    <string name ="message_sendTo">To: %s</string>
 
 </resources>

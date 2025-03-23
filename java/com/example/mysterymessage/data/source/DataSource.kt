@@ -3,10 +3,7 @@ package com.example.mysterymessage.data.source
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.data.model.dto.DataSecretMessage
 import com.example.mysterymessage.data.source.remote.ResponseResult
-import com.example.mysterymessage.ui.login.LoginData
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
-import retrofit2.http.Body
 
 interface DataSource {
     interface RemoteDataSource {
@@ -21,6 +18,7 @@ interface DataSource {
          fun findListFriendWithUID( uid: String):Flow<List<User>?>
         suspend fun acceptFriendRequest (userName:String,friendUserName:String):String
         suspend fun schedulePushNotification(dataSecretMessage: DataSecretMessage):ResponseResult
+        fun getScheduleMessage(uid:String):Flow<List<DataSecretMessage>?>
 
 
     }

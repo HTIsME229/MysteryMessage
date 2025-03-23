@@ -1,4 +1,4 @@
-package com.example.mysterymessage.ui.chat.adapter
+package com.example.mysterymessage.ui.boxtime.adapter
 
 import android.view.LayoutInflater
 import android.view.View
