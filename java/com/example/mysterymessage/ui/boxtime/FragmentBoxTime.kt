@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.mysterymessage.NavGraphDirections
 import com.example.mysterymessage.R
+import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentBoxTimeBinding
 import com.example.mysterymessage.ui.boxtime.adapter.ScheduledMessageAdapter
 import com.example.mysterymessage.ui.boxtime.adapter.SkeletonAdapter
@@ -34,7 +35,8 @@ class FragmentBoxTime : Fragment(), MenuProvider {
     private var avatar: ImageView? = null
     private lateinit var adapter: ScheduledMessageAdapter
     private val viewModel: LoginViewModel by activityViewModels()
-    private val scheduledMessageViewModel: BoxTimeViewModel by activityViewModels()
+    private val boxTimeViewModel: BoxTimeViewModel by activityViewModels()
+    private  var  profile :User?= null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,13 +70,10 @@ class FragmentBoxTime : Fragment(), MenuProvider {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         checkLogin()
-        mBinding.floatingActionButton.setOnClickListener {
-            val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentAddFriend2()
-            navController.navigate(action)
-        }
         viewModel._profile.observe(viewLifecycleOwner) {
             if (it != null)
             {
+                profile = it
                 updateAvatar()
                 mBinding.progressBar.visibility=View.GONE
                 }
@@ -82,19 +81,22 @@ class FragmentBoxTime : Fragment(), MenuProvider {
        val skeletonAdapter = SkeletonAdapter()
         mBinding.recyclerFriendMessageSkeleton.adapter=skeletonAdapter
         mBinding.recyclerFriendMessageSkeleton.visibility = View.VISIBLE // Hiện shimmer
-
         mBinding.shimmerViewContainer.startShimmer() // Bắt đầu shimmer effect
         mBinding.recyclerFriendMessage.visibility = View.GONE // Ẩn danh sách thật
         adapter = ScheduledMessageAdapter(requireContext())
         mBinding.recyclerFriendMessage.adapter = adapter
+        setUpViewModel()
+        setUpAction()
+    }
+    fun setUpViewModel(){
         viewModel._profile.observe(viewLifecycleOwner)
         {
             if(it != null)
             {
-                scheduledMessageViewModel.loadScheduledMessageData(it.userName,false)
+                boxTimeViewModel.loadScheduledMessageData(it.userName,false)
             }
         }
-        scheduledMessageViewModel._scheduledMessageListLiveData.observe(viewLifecycleOwner)
+        boxTimeViewModel._scheduledMessageListLiveData.observe(viewLifecycleOwner)
         {
             if(it != null)
             {
@@ -103,6 +105,44 @@ class FragmentBoxTime : Fragment(), MenuProvider {
                 mBinding.shimmerViewContainer.stopShimmer()
                 mBinding.shimmerViewContainer.visibility = View.GONE
                 mBinding.recyclerFriendMessage.visibility = View.VISIBLE
+            }
+        }
+        boxTimeViewModel._sentMessageListLiveData.observe(viewLifecycleOwner){
+            if(it != null){
+                adapter.updateListScheduleMessage(it)
+            }
+        }
+    }
+    fun setUpAction(){
+        mBinding.floatingActionButton.setOnClickListener {
+            val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentAddFriend2()
+            navController.navigate(action)
+        }
+        mBinding.btnSent.setOnClickListener{
+            setUpViewSentMessage()
+        }
+        mBinding.btnSchedule.setOnClickListener{
+            adapter.updateListScheduleMessage(boxTimeViewModel._scheduledMessageListLiveData.value)
+        }
+        mBinding.btnCanceled.setOnClickListener{
+            setUpViewCanceledMessage()
+        }
+    }
+    fun setUpViewSentMessage(){
+            if(profile != null){
+                if(boxTimeViewModel._sentMessageListLiveData.value== null)
+                boxTimeViewModel.loadSentMessageData(profile!!.userName,false)
+                else {
+                    adapter.updateListScheduleMessage(boxTimeViewModel._sentMessageListLiveData.value)
+                }
+            }
+    }
+    fun setUpViewCanceledMessage(){
+        if(profile != null){
+            if(boxTimeViewModel._canceledMessageListLiveData.value== null)
+                boxTimeViewModel.loadCanceledMessageData(profile!!.userName,false)
+            else {
+                adapter.updateListScheduleMessage(boxTimeViewModel._canceledMessageListLiveData.value)
             }
         }
     }

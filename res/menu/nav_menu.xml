@@ -5,16 +5,16 @@
     <item
         android:id="@+id/nav_box_time"
         android:icon="@drawable/home"
-        android:title="@string/title_home"
+        android:title="@string/title_box_time"
         app:showAsAction="ifRoom|withText" />
     <item
-        android:id="@+id/nav_call"
+        android:id="@+id/nav_friend"
         android:icon="@drawable/register"
-        android:title="@string/tile_call"
+        android:title="@string/title_friend"
         app:showAsAction="ifRoom|withText" />
     <item
-        android:id="@+id/nav_phone_book"
+        android:id="@+id/nav_letter_to_you"
         android:icon="@drawable/settings"
-        android:title="@string/title_phone_book"
+        android:title="@string/title_letter_to_you"
         app:showAsAction="ifRoom" />
 </menu>

@@ -1,4 +1,4 @@
-package com.example.mysterymessage.ui.phoneBook
+package com.example.mysterymessage.ui.LetterToYou
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.mysterymessage.databinding.FragmentPhoneBookBinding
 
-class FragmentPhoneBook :Fragment() {
+class FragmentLetterToYou :Fragment() {
     private lateinit var mbinding:FragmentPhoneBookBinding
     override fun onCreateView(
         inflater: LayoutInflater,

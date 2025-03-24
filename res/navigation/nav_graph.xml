@@ -34,8 +34,8 @@
             app:argType="com.example.mysterymessage.data.model.dto.DataQuestion" />
     </action>
     <include app:graph="@navigation/nav_box_time"/>
-    <include app:graph="@navigation/nav_call" />
-    <include app:graph="@navigation/nav_phone_book" />
+    <include app:graph="@navigation/nav_friend" />
+    <include app:graph="@navigation/nav_letter_to_you" />
     <include app:graph="@navigation/nav_login" />
     <include app:graph="@navigation/nav_secret_message" />
 

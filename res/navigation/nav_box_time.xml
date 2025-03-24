@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/fragmentBoxTime"
         android:name="com.example.mysterymessage.ui.boxtime.FragmentBoxTime"
-        android:label="Recent Chats">
+        android:label="@string/title_box_time">
         <action
             android:id="@+id/action_fragmentBoxTime_to_fragmentAddFriend2"
             app:destination="@id/fragmentAddFriend2" />

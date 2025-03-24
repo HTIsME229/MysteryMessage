@@ -82,5 +82,7 @@
     <string name ="message_title">Title: %s</string>
     <string name ="message_sendTime">Time Send: %s</string>
     <string name ="message_sendTo">To: %s</string>
-
+<string name="title_box_time">Box Time</string>
+<string name="title_letter_to_you">Letter to you</string>
+<string name="title_friend">Friend</string>
 </resources>

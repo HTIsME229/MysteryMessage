@@ -17,7 +17,15 @@ class BoxTimeViewModel @Inject constructor(
      private var scheduledMessageList :MutableLiveData<List<DataSecretMessage>?> = MutableLiveData()
     val _scheduledMessageListLiveData: MutableLiveData<List<DataSecretMessage>?>
         get() = scheduledMessageList
+    private var sentMessageList :MutableLiveData<List<DataSecretMessage>?> = MutableLiveData()
+    val _sentMessageListLiveData: MutableLiveData<List<DataSecretMessage>?>
+        get() = sentMessageList
+    private var canceledMessageList :MutableLiveData<List<DataSecretMessage>?> = MutableLiveData()
+    val _canceledMessageListLiveData: MutableLiveData<List<DataSecretMessage>?>
+        get() = canceledMessageList
     private var hasFetchedScheduledMessage = false
+    private var hasFetchedSentMessage = false
+    private var hasFetchedCanceledMessage = false
 
     fun loadScheduledMessageData(userName:String,forceRefresh :Boolean){
         if(!hasFetchedScheduledMessage || forceRefresh){
@@ -38,4 +46,43 @@ class BoxTimeViewModel @Inject constructor(
         }
 
     }
+    fun loadSentMessageData(userName:String,forceRefresh :Boolean){
+        if(!hasFetchedSentMessage || forceRefresh){
+            viewModelScope.launch {
+                try {
+                    repository.getSentMessage(userName)
+                        .collect { result ->
+                            if (result != null) {
+                                hasFetchedSentMessage = true
+                                sentMessageList.postValue(result) }
+                            else
+                            sentMessageList.postValue(null)
+                        }
+                } catch (_: Exception) {
+
+                }
+            }
+        }
+
+    }
+    fun loadCanceledMessageData(userName:String,forceRefresh :Boolean){
+        if(!hasFetchedCanceledMessage || forceRefresh){
+            viewModelScope.launch {
+                try {
+                    repository.getCanceledMessage(userName)
+                        .collect { result ->
+                            if (result != null) {
+                                hasFetchedCanceledMessage = true
+                                canceledMessageList.postValue(result) }
+                            else
+                                canceledMessageList.postValue(null)
+                        }
+                } catch (_: Exception) {
+
+                }
+            }
+        }
+
+    }
+
 }

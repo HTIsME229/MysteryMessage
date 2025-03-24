@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_phone_book"
+    android:id="@+id/nav_letter_to_you"
+    android:label="@string/title_letter_to_you"
     app:startDestination="@id/fragmentPhoneBook">
 
     <fragment
         android:id="@+id/fragmentPhoneBook"
-        android:name="com.example.mysterymessage.ui.phoneBook.FragmentPhoneBook"
-        android:label="FragmentPhoneBook" />
+        android:name="com.example.mysterymessage.ui.LetterToYou.FragmentLetterToYou"
+        android:label="@string/title_letter_to_you" />
 </navigation>
