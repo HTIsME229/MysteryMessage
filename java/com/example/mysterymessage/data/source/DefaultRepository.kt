@@ -59,6 +59,10 @@ class DefaultRepository
         return remoteDataSource.getSentMessage(userName)
     }
 
+    override fun getLetterToYou(uid: String): Flow<List<DataSecretMessage>?> {
+        return remoteDataSource.getLetterToYou(uid)
+    }
+
     override fun getCanceledMessage(userName: String): Flow<List<DataSecretMessage>?> {
 return remoteDataSource.getCanceledMessage(userName)   }
 

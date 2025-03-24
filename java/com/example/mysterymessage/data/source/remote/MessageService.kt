@@ -38,5 +38,7 @@ interface MessageService {
     @POST("/")
     suspend fun getSentMessage(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
     @POST("/")
+    suspend fun getLetterToYou(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
+    @POST("/")
     suspend fun getCanceledMessage(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
 }

@@ -19,6 +19,7 @@ interface Repository {
         suspend fun schedulePushNotification(dataSecretMessage: DataSecretMessage):ResponseResult
          fun getScheduleMessage(uid:String):Flow<List<DataSecretMessage>?>
          fun getSentMessage(userName:String):Flow<List<DataSecretMessage>?>
+         fun getLetterToYou(uid:String):Flow<List<DataSecretMessage>?>
          fun getCanceledMessage(userName:String):Flow<List<DataSecretMessage>?>
     }
     interface LocalRepository:Repository{}
