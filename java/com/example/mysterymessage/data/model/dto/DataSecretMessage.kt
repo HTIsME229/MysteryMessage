@@ -14,6 +14,7 @@ data class DataSecretMessage(
     var userNameReceiver: String = "",
     var userReceiverId: String = "",
     var sendTime: String = "",
+    var status :String = "",
     var dataQuestion: DataQuestion = DataQuestion("","")
 ):Parcelable
 @Parcelize

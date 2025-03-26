@@ -18,7 +18,7 @@ interface DataSource {
          fun findListFriendWithUID( uid: String):Flow<List<User>?>
         suspend fun acceptFriendRequest (userName:String,friendUserName:String):String
         suspend fun schedulePushNotification(dataSecretMessage: DataSecretMessage):ResponseResult
-        fun getScheduleMessage(uid:String):Flow<List<DataSecretMessage>?>
+        fun getMessage(uid:String):Flow<List<DataSecretMessage>?>
         fun getSentMessage(userName:String):Flow<List<DataSecretMessage>?>
         fun getLetterToYou(uid:String):Flow<List<DataSecretMessage>?>
         fun getCanceledMessage(userName:String):Flow<List<DataSecretMessage>?>

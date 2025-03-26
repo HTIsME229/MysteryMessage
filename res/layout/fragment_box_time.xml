@@ -9,65 +9,11 @@
 
 
     <!-- Thanh chọn danh mục chat -->
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/chat_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:padding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:selectionRequired="true"
-        app:singleSelection="true">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_schedule"
-            style="@style/ToggleButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:minWidth="80dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/btn_message_schedule" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sent"
-            style="@style/ToggleButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minWidth="80dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/btn_message_sent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_canceled"
-            style="@style/ToggleButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minWidth="80dp"
-            android:paddingHorizontal="8dp"
-            android:text="@string/btn_message_canceled" />
-
-    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <!-- Danh sách chat -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_friend_message"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="80dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_categories"
-        tools:listitem="@layout/box_time_item" />
+    <include
+        android:id="@+id/calender"
+        layout="@layout/fragment_test" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -96,30 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_view_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_categories"
-        app:shimmer_auto_start="true"
-        app:shimmer_base_alpha="0.7"
-        app:shimmer_duration="1000">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_friend_message_skeleton"
-            android:layout_width="match_parent"
-
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_skeleton_message" />
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-    <!-- Nút Floating Action Button (+) -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -63,6 +63,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:boxStrokeColor="@color/black"
+        app:boxBackgroundColor="@color/white"
+        app:hintTextColor="@color/gray"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
@@ -71,6 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,15 +88,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailInputLayout">
+        app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+        app:boxStrokeColor="@color/black"
+    app:boxBackgroundColor="@color/white"
+    app:hintTextColor="@color/gray"
+    app:boxStrokeWidthFocused="1dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Mật khẩu"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mật khẩu"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+    android:textColorHint="@color/gray" />
+
+</com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/forgotPasswordText"

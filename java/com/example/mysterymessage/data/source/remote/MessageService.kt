@@ -34,7 +34,7 @@ interface MessageService {
     @POST("/schedulePushNotification")
     suspend fun schedulePushNotification(@Body dataSecretMessage: DataSecretMessage):Response<ResponseResult>
     @POST("/")
-    suspend fun getScheduleMessage(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
+    suspend fun getMessage(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
     @POST("/")
     suspend fun getSentMessage(@Body request: Map<String, String>):Response<List<DataSecretMessage>?>
     @POST("/")

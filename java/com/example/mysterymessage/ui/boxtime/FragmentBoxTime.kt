@@ -1,6 +1,9 @@
 package com.example.mysterymessage.ui.boxtime
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +12,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.GridLayout
 import android.widget.ImageView
+import android.widget.NumberPicker
+import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -21,22 +28,27 @@ import com.example.mysterymessage.NavGraphDirections
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentBoxTimeBinding
-import com.example.mysterymessage.ui.boxtime.adapter.ScheduledMessageAdapter
-import com.example.mysterymessage.ui.boxtime.adapter.SkeletonAdapter
 import com.example.mysterymessage.ui.boxtime.viewmodel.BoxTimeViewModel
 import com.example.mysterymessage.ui.login.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
+
 
 @AndroidEntryPoint
 class FragmentBoxTime : Fragment(), MenuProvider {
     private lateinit var mBinding: FragmentBoxTimeBinding
     private lateinit var navController: NavController
     private var avatar: ImageView? = null
-    private lateinit var adapter: ScheduledMessageAdapter
     private val viewModel: LoginViewModel by activityViewModels()
     private val boxTimeViewModel: BoxTimeViewModel by activityViewModels()
     private  var  profile :User?= null
+    private var selectedMonth = 0
+    private var selectedYear = 0
+    private val daysInMonth = intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,7 +77,9 @@ class FragmentBoxTime : Fragment(), MenuProvider {
             viewModel.refreshUser(currentUser.uid)
         }
 
+
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
@@ -78,38 +92,31 @@ class FragmentBoxTime : Fragment(), MenuProvider {
                 mBinding.progressBar.visibility=View.GONE
                 }
         }
-       val skeletonAdapter = SkeletonAdapter()
-        mBinding.recyclerFriendMessageSkeleton.adapter=skeletonAdapter
-        mBinding.recyclerFriendMessageSkeleton.visibility = View.VISIBLE // Hiện shimmer
-        mBinding.shimmerViewContainer.startShimmer() // Bắt đầu shimmer effect
-        mBinding.recyclerFriendMessage.visibility = View.GONE // Ẩn danh sách thật
-        adapter = ScheduledMessageAdapter(requireContext())
-        mBinding.recyclerFriendMessage.adapter = adapter
+
+        mBinding.calender.txtMonth.setOnClickListener{
+            openMonthYearPickerDialog()
+        }
+        val calendar = Calendar.getInstance()
+        selectedMonth = calendar[Calendar.MONTH] +1
+        selectedYear = calendar[Calendar.YEAR]
+
+        updateCalendar()
         setUpViewModel()
         setUpAction()
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setUpViewModel(){
         viewModel._profile.observe(viewLifecycleOwner)
         {
             if(it != null)
             {
-                boxTimeViewModel.loadScheduledMessageData(it.userName,false)
+                boxTimeViewModel.loadMessageData(it.userName,false)
             }
         }
-        boxTimeViewModel._scheduledMessageListLiveData.observe(viewLifecycleOwner)
-        {
+        boxTimeViewModel._MessageListLiveData.observe(viewLifecycleOwner){
             if(it != null)
             {
-                adapter.updateListScheduleMessage(it)
-                mBinding.recyclerFriendMessageSkeleton.visibility = View.GONE
-                mBinding.shimmerViewContainer.stopShimmer()
-                mBinding.shimmerViewContainer.visibility = View.GONE
-                mBinding.recyclerFriendMessage.visibility = View.VISIBLE
-            }
-        }
-        boxTimeViewModel._sentMessageListLiveData.observe(viewLifecycleOwner){
-            if(it != null){
-                adapter.updateListScheduleMessage(it)
+                updateCalendar()
             }
         }
     }
@@ -118,34 +125,10 @@ class FragmentBoxTime : Fragment(), MenuProvider {
             val action = FragmentBoxTimeDirections.actionFragmentBoxTimeToFragmentAddFriend2()
             navController.navigate(action)
         }
-        mBinding.btnSent.setOnClickListener{
-            setUpViewSentMessage()
-        }
-        mBinding.btnSchedule.setOnClickListener{
-            adapter.updateListScheduleMessage(boxTimeViewModel._scheduledMessageListLiveData.value)
-        }
-        mBinding.btnCanceled.setOnClickListener{
-            setUpViewCanceledMessage()
-        }
+
     }
-    fun setUpViewSentMessage(){
-            if(profile != null){
-                if(boxTimeViewModel._sentMessageListLiveData.value== null)
-                boxTimeViewModel.loadSentMessageData(profile!!.userName,false)
-                else {
-                    adapter.updateListScheduleMessage(boxTimeViewModel._sentMessageListLiveData.value)
-                }
-            }
-    }
-    fun setUpViewCanceledMessage(){
-        if(profile != null){
-            if(boxTimeViewModel._canceledMessageListLiveData.value== null)
-                boxTimeViewModel.loadCanceledMessageData(profile!!.userName,false)
-            else {
-                adapter.updateListScheduleMessage(boxTimeViewModel._canceledMessageListLiveData.value)
-            }
-        }
-    }
+
+
     private fun updateAvatar() {
         val user = viewModel._profile.value
         if (user != null) {
@@ -190,6 +173,97 @@ class FragmentBoxTime : Fragment(), MenuProvider {
     }
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun openMonthYearPickerDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_month_year_picker, null)
+        val monthPicker = dialogView.findViewById<NumberPicker>(R.id.monthPicker)
+        val yearPicker = dialogView.findViewById<NumberPicker>(R.id.yearPicker)
+
+        monthPicker.minValue = 1
+        monthPicker.maxValue = 12
+        monthPicker.value = selectedMonth // Mặc định tháng đã chọn
+
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        yearPicker.minValue = 2000 // Năm nhỏ nhất
+        yearPicker.maxValue = currentYear + 10 // Năm lớn nhất (tương lai)
+        yearPicker.value = selectedYear // Mặc định năm đã chọn
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Chọn tháng & năm")
+            .setView(dialogView)
+            .show()
+        dialogView.findViewById<Button>(R.id.btnConfirm).setOnClickListener{
+            selectedMonth = monthPicker.value
+            selectedYear = yearPicker.value
+            updateCalendar()
+            dialog.dismiss()
+
+
+        }
+        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener{
+            dialog.dismiss()
+        }
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetTextI18n")
+    private fun updateCalendar() {
+
+                mBinding.calender.txtMonth.setText(("Tháng $selectedMonth").toString() + " " + selectedYear)
+        val days = if (( isLeapYear(selectedYear))) 29 else daysInMonth[selectedMonth-1]
+        Log.d("Calendar", "Days in month: $days")
+
+        mBinding.calender.gridCalendar.removeAllViews()
+        mBinding.calender.gridCalendar.columnCount = 7
+        val messageList = boxTimeViewModel._MessageListLiveData.value?.filter {
+            getMonthFromISO(it.sendTime) == selectedMonth && getYearFromISO(it.sendTime) == selectedYear }
+        for (i in 0 until days) {
+            val hasMessage = messageList?.filter { message -> getDayFromISO(message.sendTime) == i + 1 } ?: emptyList()
+            Log.d("checkMessage","${i+1} +${hasMessage.toString()}")
+            val dotView: View = if (hasMessage.isNotEmpty())
+            {
+                when(hasMessage[0].status)
+                {
+                    "sent" -> layoutInflater.inflate(R.layout.item_sent, mBinding.calender.gridCalendar, false)
+                    "canceled" -> layoutInflater.inflate(R.layout.item_canceled, mBinding.calender.gridCalendar, false)
+                    "scheduled" -> layoutInflater.inflate(R.layout.item_scheduled, mBinding.calender.gridCalendar, false)
+                    else -> layoutInflater.inflate(R.layout.item_dot, mBinding.calender.gridCalendar, false)
+                }
+            } else {
+                layoutInflater.inflate(R.layout.item_dot, mBinding.calender.gridCalendar, false)
+            }
+
+            val params = GridLayout.LayoutParams()
+            params.rowSpec = GridLayout.spec(i / 7, 1f)
+            params.columnSpec = GridLayout.spec(i % 7, 1f)
+            params.setMargins(8, 8, 8, 8)
+
+            dotView.layoutParams = params
+            mBinding.calender.gridCalendar.addView(dotView)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getMonthFromISO(date: String): Int {
+        val localDate = LocalDate.parse(date.substring(0, 10), DateTimeFormatter.ISO_DATE)
+        return localDate.monthValue
+    }
+    private fun isLeapYear(year: Int): Boolean {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getYearFromISO(date: String): Int {
+        val localDate = LocalDate.parse(date.substring(0, 10), DateTimeFormatter.ISO_DATE)
+        return localDate.year
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDayFromISO(date: String): Int {
+        val localDate = LocalDate.parse(date.substring(0, 10), DateTimeFormatter.ISO_DATE)
+        return localDate.dayOfMonth
     }
 
 }

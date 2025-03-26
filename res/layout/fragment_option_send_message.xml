@@ -30,12 +30,12 @@
         <Button
             style="@style/CustomButtonStyle"
             android:id="@+id/option_secret"
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:textColor="@color/black"
             android:drawableLeft="@drawable/incognito_32"
             android:gravity="center"
             android:text="@string/secret_message" />
@@ -47,6 +47,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
+            android:textColor="@color/black"
+
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
             android:drawableLeft="@drawable/ic_message"
@@ -56,6 +58,8 @@
         <!-- Button 3 -->
         <Button
             android:id="@+id/option_location"
+            android:textColor="@color/black"
+
             style="@style/CustomButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -71,6 +75,8 @@
             android:id="@+id/option_scheduled"
             style="@style/CustomButtonStyle"
             android:layout_width="0dp"
+            android:textColor="@color/black"
+
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -86,6 +92,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
+            android:textColor="@color/black"
+
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
             android:drawableLeft="@drawable/ic_message"
@@ -99,6 +107,8 @@
             android:layout_height="wrap_content"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
+            android:textColor="@color/black"
+
             android:layout_margin="8dp"
             android:drawableLeft="@drawable/ic_message"
             android:gravity="center"

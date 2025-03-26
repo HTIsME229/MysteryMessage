@@ -51,8 +51,8 @@ class DefaultRepository
         return remoteDataSource.schedulePushNotification(dataSecretMessage)
     }
 
-    override fun getScheduleMessage(uid: String): Flow<List<DataSecretMessage>?> {
-        return remoteDataSource.getScheduleMessage(uid)
+    override fun getMessage(uid: String): Flow<List<DataSecretMessage>?> {
+        return remoteDataSource.getMessage(uid)
     }
 
     override fun getSentMessage(userName: String): Flow<List<DataSecretMessage>?> {

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Month and Year"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <!-- Picker Tháng -->
+        <NumberPicker
+            android:id="@+id/monthPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Picker Năm -->
+        <NumberPicker
+            android:id="@+id/yearPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Nút xác nhận & hủy -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingTop="8dp">
+
+        <Button
+            style="@style/CustomButtonStyle"
+
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy"
+            android:textColor="@color/black"
+            android:background="?android:attr/selectableItemBackground"/>
+
+        <Button
+            style="@style/CustomButtonStyle"
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textColor="@color/black"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+</LinearLayout>
