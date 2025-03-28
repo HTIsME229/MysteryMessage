@@ -2,11 +2,25 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MysteryMessage" parent="Theme.Material3.DayNight">
         <!-- Đổi màu chính thành trong suốt hoặc màu mong muốn -->
-        <item name="colorPrimary">@android:color/white</item>
-        <item name="colorSurface">@android:color/white</item>
+        <item name="colorPrimary">#43cea2</item>
+        <item name="colorSurface">#43cea2</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
+        <item name="colorPrimaryContainer">#43cea2</item>
+        <item name="actionBarStyle">@style/MyActionBarStyle</item>
+        <item name="android:actionBarStyle">@style/MyActionBarStyle</item>
     </style>
+    <style name="MyActionBarStyle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="background">@drawable/gradient_app_bar</item>
+        <item name="android:background">@drawable/gradient_app_bar</item>
+    </style>
+    <style name="CustomBottomBarStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <!-- Background of the entire BottomBar -->
+        <item name="android:background">@drawable/gradient_app_bar</item>
 
+        <!-- Color selector for the icon and text when selected/unselected -->
+        <item name="itemTextColor">@color/bottom_nav_item_color_selector</item>
+        <item name="itemIconTint">@color/bottom_nav_item_color_selector</item>
+    </style>
     <style name="Theme.MysteryMessage" parent="Base.Theme.MysteryMessage" />
 </resources>

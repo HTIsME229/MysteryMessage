@@ -3,8 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    android:background="@drawable/border_item"
+    android:background="@drawable/gradient_box_item"
     android:orientation="horizontal"
+
     android:padding="10dp">
 
     <!-- Cột bên trái: Tiêu đề, người nhận và thời gian gửi -->
@@ -19,8 +20,13 @@
             android:id="@+id/tvMessageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="@string/message_title"
-            android:textColor="@android:color/black"
+            android:textColor="#F8F9FA"
+
             android:textSize="16sp"
             android:textStyle="bold" />
 

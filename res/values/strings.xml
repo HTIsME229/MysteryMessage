@@ -85,4 +85,5 @@
 <string name="title_box_time">Box Time</string>
 <string name="title_letter_to_you">Letter to you</string>
 <string name="title_friend">Friend</string>
+    <string name="message_sender_name">From:%s</string>
 </resources>

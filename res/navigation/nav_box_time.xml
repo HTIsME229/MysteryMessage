@@ -15,6 +15,7 @@
         <action
             android:id="@+id/action_fragmentBoxTime_to_fragmentSettings3"
             app:destination="@id/fragmentSettings" />
+
     </fragment>
     <action android:id="@+id/action_global_fragmentChat" app:destination="@id/fragmentBoxTime" />
     <fragment

@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_box_time, R.id.nav_friend,R.id.nav_letter_to_you,R.id.nav_login,R.id.nav_secret_message),
+            setOf(R.id.nav_box_time, R.id.nav_friend,R.id.nav_letter_to_you,R.id.nav_secret_message),
 
             )
 

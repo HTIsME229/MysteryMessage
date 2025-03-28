@@ -5,12 +5,43 @@
     android:id="@+id/nav_graph"
     tools:ignore="InvalidNavigation"
     app:startDestination="@id/nav_box_time">
-    <action
-        android:id="@+id/action_global_fragmentLogin2"
-        app:destination="@id/nav_login" />
+<action
+        android:id="@+id/action_global_nav_box_time"
+        app:destination="@id/fragmentBoxTime" />
     <action
         android:id="@+id/action_global_nav_secret_message"
-        app:destination="@id/nav_secret_message" >
+        app:destination="@id/fragmentDetailSecretMessage3">
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="message"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="userReceiverId"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="userNameSender"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="dataQuestion"
+            app:argType="com.example.mysterymessage.data.model.dto.DataQuestion" />
+    </action>
+    <include app:graph="@navigation/nav_box_time"/>
+    <include app:graph="@navigation/nav_friend" />
+    <include app:graph="@navigation/nav_letter_to_you" />
+    <include app:graph="@navigation/nav_secret_message" />
+    <fragment
+        android:id="@+id/fragmentDetailSecretMessage3"
+        android:name="com.example.mysterymessage.ui.MessageOptionDialog.SecretMessage.FramgetAnswerQuestion.FragmentDetailSecretMessage" />
+    <action android:id="@+id/action_global_fragmentDetailSecretMessage3"
+        app:destination="@id/fragmentDetailSecretMessage3">
         <argument
             android:name="title"
             app:argType="string"
@@ -28,17 +59,5 @@
             android:name="userNameSender"
             app:argType="string"
             android:defaultValue="" />
-
-        <argument
-            android:name="dataQuestion"
-            app:argType="com.example.mysterymessage.data.model.dto.DataQuestion" />
     </action>
-    <include app:graph="@navigation/nav_box_time"/>
-    <include app:graph="@navigation/nav_friend" />
-    <include app:graph="@navigation/nav_letter_to_you" />
-    <include app:graph="@navigation/nav_login" />
-    <include app:graph="@navigation/nav_secret_message" />
-
-
-
 </navigation>

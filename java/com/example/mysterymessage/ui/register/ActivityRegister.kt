@@ -2,42 +2,34 @@ package com.example.mysterymessage.ui.register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import com.example.mysterymessage.MessengerUTILS
-import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
-import com.example.mysterymessage.data.source.Repository
 import com.example.mysterymessage.databinding.FragmentRegisterBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment :Fragment() {
+class ActivityRegister :AppCompatActivity() {
     private lateinit var mBinding :FragmentRegisterBinding
     private var selectedAvatar: ImageView? = null
     private var selectedTick: ImageView? = null
-    private val viewModel: RegisterViewModel by viewModels()
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-       mBinding= FragmentRegisterBinding.inflate(inflater,container,false)
-        return mBinding.root
-    }
+    private lateinit var navController: NavController
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private val viewModel: RegisterViewModel by viewModels ()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mBinding = FragmentRegisterBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
         setUpAction()
     }
+
+
 
     private fun setUpAction() {
 
@@ -68,7 +60,7 @@ class RegisterFragment :Fragment() {
                 selectedAvatar=avatars[index]
             }
         }
-        viewModel._registerFormState.observe(viewLifecycleOwner){
+        viewModel._registerFormState.observe(this){
             if (it != null) {
                 if(!it.isCorrect){
 
@@ -82,10 +74,10 @@ class RegisterFragment :Fragment() {
 
             }
         }
-        viewModel._registerState.observe(viewLifecycleOwner){
+        viewModel._registerState.observe(this){
             if(it.success){
                 mBinding.progressBarRegister.visibility= ProgressBar.GONE
-              findNavController().popBackStack()
+                onBackPressedDispatcher.onBackPressed()
             }
             else{
                 mBinding.progressBarRegister.visibility= ProgressBar.GONE

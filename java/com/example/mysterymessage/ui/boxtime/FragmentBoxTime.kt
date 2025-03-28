@@ -2,6 +2,7 @@ package com.example.mysterymessage.ui.boxtime
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -27,14 +28,15 @@ import com.bumptech.glide.Glide
 import com.example.mysterymessage.NavGraphDirections
 import com.example.mysterymessage.R
 import com.example.mysterymessage.data.model.User
+import com.example.mysterymessage.data.model.dto.DataSecretMessage
 import com.example.mysterymessage.databinding.FragmentBoxTimeBinding
 import com.example.mysterymessage.ui.boxtime.viewmodel.BoxTimeViewModel
+import com.example.mysterymessage.ui.login.LoginActivity
 import com.example.mysterymessage.ui.login.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
 
 
 @AndroidEntryPoint
@@ -70,8 +72,8 @@ class FragmentBoxTime : Fragment(), MenuProvider {
                     "NavDebug",
                     "Current Destination: ${currentDestination?.label} (${currentDestination?.id})"
                 )
-                val action = NavGraphDirections.actionGlobalFragmentLogin2()
-                navController.navigate(action)
+                val loginIntent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(loginIntent)
             }
         else{
             viewModel.refreshUser(currentUser.uid)
@@ -233,8 +235,27 @@ class FragmentBoxTime : Fragment(), MenuProvider {
                     "scheduled" -> layoutInflater.inflate(R.layout.item_scheduled, mBinding.calender.gridCalendar, false)
                     else -> layoutInflater.inflate(R.layout.item_dot, mBinding.calender.gridCalendar, false)
                 }
-            } else {
+
+            }
+
+            else {
                 layoutInflater.inflate(R.layout.item_dot, mBinding.calender.gridCalendar, false)
+            }
+            if (hasMessage.isNotEmpty()) {
+                dotView.setOnClickListener {
+                    FragmentDialogListMessage(object:FragmentDialogListMessage.onLetterChoicedListener{
+                        override fun onLetterClick(dataSecretMessage: DataSecretMessage) {
+                            val action = NavGraphDirections.actionGlobalFragmentDetailSecretMessage3(
+                                title= dataSecretMessage.title,
+                                message = dataSecretMessage.message,
+                                userReceiverId = dataSecretMessage.userReceiverId,
+                                userNameSender = dataSecretMessage.userNameSender
+                            )
+                            navController.navigate(action)
+                        }
+
+                    },hasMessage).show(
+                        childFragmentManager, FragmentDialogListMessage.TAG)                }
             }
 
             val params = GridLayout.LayoutParams()

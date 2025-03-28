@@ -1,53 +1,30 @@
 package com.example.mysterymessage.ui.login
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.example.mysterymessage.MessengerUTILS
-import com.example.mysterymessage.R
-import com.example.mysterymessage.data.model.User
 import com.example.mysterymessage.databinding.FragmentLoginBinding
-import com.example.mysterymessage.ui.register.RegisterViewModel
+import com.example.mysterymessage.ui.register.ActivityRegister
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentLogin:Fragment() {
+class LoginActivity:AppCompatActivity() {
     private  lateinit var mBinding:FragmentLoginBinding
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var navController: NavController
 
-    private val viewModel: LoginViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navController = findNavController();
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mBinding= FragmentLoginBinding.inflate(inflater,container,false)
-        return mBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mBinding.btnRegister.setOnClickListener{
-            val action = FragmentLoginDirections.actionFragmentLogin2ToRegisterFragment()
-            findNavController().navigate(action)
-        }
+        mBinding = FragmentLoginBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
         setAction()
         setUpObserver()
-
     }
 
     private fun setAction() {
@@ -62,10 +39,15 @@ class FragmentLogin:Fragment() {
             }
 
         }
+        mBinding
+            .btnRegister.setOnClickListener {
+                val loginIntent = Intent(this, ActivityRegister::class.java)
+                startActivity(loginIntent)
+            }
     }
 
     private fun setUpObserver() {
-        viewModel._loginFormsState.observe(viewLifecycleOwner){
+        viewModel._loginFormsState.observe(this){
             if(it != null){
                 if(!it.isCorrect){
                     mBinding.emailInputLayout.error = it.userNameError?.let { it1 -> getString(it1) }
@@ -73,14 +55,15 @@ class FragmentLogin:Fragment() {
                 }
             }
         }
-        viewModel._profile.observe(viewLifecycleOwner){
+        viewModel._profile.observe(this){
             if(it != null){
                 val currentDestination = navController.currentDestination
+                onBackPressedDispatcher.onBackPressed()
                 Log.d("NavDebug", "Current Destination: ${currentDestination?.label} (${currentDestination?.id})")
-                navController.popBackStack()
             }
         }
     }
+
 
 
 }

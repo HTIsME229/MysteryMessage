@@ -7,7 +7,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="red">#FFFF0000</color>
 
-
+    <color name="appbar_color">#fff</color>
     <color name="deep_purple_300">#FF9575CD</color>
     <color name="deep_purple_200">#FFB39DDB</color>
     <color name="deep_purple_100">#FFD1C4E9</color>
@@ -20,5 +20,6 @@
     <color name="blue_200">#448AFF</color>
     <color name="blue_100">#82B1FF</color>
     <color name="custom_button_color">#F5F5F5</color>
-
+    <color name="selected_item_color">#3498db </color> <!-- Màu xanh nhạt -->
+    <color name="unselected_item_color">#000</color> <!-- Màu trắng -->
 </resources>

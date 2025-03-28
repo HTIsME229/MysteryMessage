@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.mysterymessage.R
 import com.example.mysterymessage.databinding.FragmentDetailSecretMessageBinding
 
@@ -29,15 +28,14 @@ class FragmentDetailSecretMessage:Fragment() {
         val message = args?.getString("message")
         val userNameSender = args?.getString("userNameSender")
         setUpView(title,message,userNameSender)
-        binding.btnClose.setOnClickListener{
-            findNavController().popBackStack(R.id.fragmentBoxTime, true)
-        }
+
     }
 
     private fun setUpView(title: String?, message: String?, userNameSender: String?) {
         binding.tvTitle.text = title
         binding.tvMessageContent.text = message
-        binding.tvSender.text = userNameSender
+        binding.tvSender.text= context?.getString(R.string.message_sender_name,userNameSender)
+
     }
 
 }
